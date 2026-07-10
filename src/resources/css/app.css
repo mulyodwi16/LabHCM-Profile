@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Page background: ambient mesh for the blur to sit on ---------------- */
+body {
+    background:
+        radial-gradient(1200px 600px at 10% 5%,  rgba(59,130,246,0.18), transparent 60%),
+        radial-gradient(900px 500px  at 90% 15%, rgba(139,92,246,0.14), transparent 60%),
+        radial-gradient(1000px 600px at 70% 90%, rgba(14,165,233,0.12), transparent 60%),
+        radial-gradient(700px 400px  at 20% 80%, rgba(236,72,153,0.08), transparent 60%),
+        #f4f7fb;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Slightly cooler mesh for admin area */
+body.admin-shell {
+    background:
+        radial-gradient(900px 500px at 15% 10%, rgba(30,64,175,0.20), transparent 60%),
+        radial-gradient(700px 400px at 85% 90%, rgba(56,189,248,0.12), transparent 60%),
+        #eef2f7;
+    background-attachment: fixed;
+}
+
+/* --- Glass primitives ---------------------------------------------------- */
+@layer components {
+    .glass {
+        @apply bg-white/60 backdrop-blur-xl border border-white/50 shadow-lg shadow-slate-900/5;
+    }
+    .glass-soft {
+        @apply bg-white/45 backdrop-blur-md border border-white/40 shadow-md shadow-slate-900/5;
+    }
+    .glass-nav {
+        @apply bg-white/55 backdrop-blur-xl border-b border-white/40 shadow-sm;
+    }
+    .glass-dark {
+        @apply bg-slate-900/70 backdrop-blur-xl border border-white/10 shadow-2xl;
+    }
+    .glass-tint-blue {
+        @apply bg-blue-900/70 backdrop-blur-xl border border-white/10 shadow-2xl;
+    }
+    .glass-input {
+        @apply bg-white/70 backdrop-blur border-white/60 focus:bg-white/90;
+    }
+}
+
+/* --- Route transitions --------------------------------------------------- */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 260ms;
+    animation-timing-function: cubic-bezier(.4, 0, .2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+    main { animation: none !important; }
+}
+
+@keyframes page-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0);   }
+}
+main { animation: page-in 260ms cubic-bezier(.4, 0, .2, 1); }
+
+/* --- Hero carousel ------------------------------------------------------- */
+.hc-track { display: grid; grid-template-areas: "stack"; }
+.hc-slide { grid-area: stack; opacity: 0; transition: opacity 700ms ease; pointer-events: none; }
+.hc-slide.is-active { opacity: 1; pointer-events: auto; }

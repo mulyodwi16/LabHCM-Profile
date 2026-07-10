@@ -1,0 +1,40 @@
+# --- Secrets & local config -----------------------------------------------
+docker-compose.yml
+docker-compose.override.yml
+src/.env
+src/.env.backup
+src/.env.production
+src/auth.json
+
+# --- Laravel runtime ------------------------------------------------------
+src/vendor/
+src/node_modules/
+src/public/build/
+src/public/hot
+src/public/storage
+src/storage/*.key
+src/storage/pail/
+src/storage/framework/cache/data/*
+src/storage/framework/sessions/*
+src/storage/framework/testing/*
+src/storage/framework/views/*
+src/storage/logs/*.log
+src/bootstrap/cache/*.php
+
+# keep .gitkeep placeholders
+!src/storage/framework/cache/data/.gitignore
+!src/storage/framework/sessions/.gitignore
+!src/storage/framework/testing/.gitignore
+!src/storage/framework/views/.gitignore
+!src/storage/logs/.gitignore
+!src/bootstrap/cache/.gitignore
+
+# --- OS / editor ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.phpunit.result.cache
+.phpunit.cache/
+*.swp
+*.swo
