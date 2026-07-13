@@ -53,7 +53,11 @@
         <div class="flex items-center gap-4">
             <img src="{{ $user->profile?->photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name ?: '?') . '&background=1e3a8a&color=fff' }}"
                  class="w-20 h-20 rounded-full object-cover border" alt="">
-            <input type="file" name="photo" accept="image/*" class="text-sm">
+            <div>
+                <input type="file" name="photo" accept=".jpg,.jpeg,.png,image/jpeg,image/png" class="text-sm block">
+                <x-upload-hint type="image" />
+                @error('photo')<p class="text-red-600 text-sm">{{ $message }}</p>@enderror
+            </div>
         </div>
 
         @if($isDosen)

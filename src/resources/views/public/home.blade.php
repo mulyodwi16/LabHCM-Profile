@@ -31,7 +31,8 @@
                            data-index="{{ $i }}">
                             <img src="{{ $s['image'] }}" alt="{{ $s['title'] }}"
                                  class="absolute inset-0 w-full h-full object-cover"
-                                 loading="{{ $i === 0 ? 'eager' : 'lazy' }}">
+                                 loading="{{ $i === 0 ? 'eager' : 'lazy' }}"
+                                 onerror="this.onerror=null;this.src='{{ asset('images/HCMBlue.svg') }}';">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                             <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
                                 <span class="text-xs uppercase tracking-wider text-blue-300 font-semibold">{{ $s['kind'] }}</span>
@@ -96,17 +97,22 @@
 <section id="projects" class="scroll-mt-20 py-20">
     <div class="max-w-7xl mx-auto px-4">
         <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Projects</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             @forelse ($projects as $p)
-                <a href="{{ route('projects.show', $p) }}" class="glass rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-0.5 transition group">
-                    <div class="aspect-video bg-slate-200/60">
+                <a href="{{ route('projects.show', $p) }}" class="glass rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-0.5 transition group flex flex-col h-full">
+                    <div class="relative w-full overflow-hidden bg-slate-200/60 aspect-[4/3] sm:aspect-video">
                         @if($p->images->first())
-                            <img src="{{ $p->images->first()->url }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy">
+                            <img src="{{ $p->images->first()->url }}" alt="{{ $p->title }}"
+                                 class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                                 loading="lazy" decoding="async"
+                                 onerror="this.onerror=null;this.src='{{ asset('images/HCMBlue.svg') }}';">
+                        @else
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-sm px-4 text-center">Belum ada gambar</div>
                         @endif
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-slate-900">{{ $p->title }}</h3>
-                        <p class="text-sm text-slate-600 line-clamp-2 mt-1">{{ $p->description }}</p>
+                    <div class="p-4 flex-1 flex flex-col">
+                        <h3 class="font-semibold text-slate-900 line-clamp-2">{{ $p->title }}</h3>
+                        <p class="text-sm text-slate-600 line-clamp-2 mt-1 flex-1">{{ $p->description }}</p>
                     </div>
                 </a>
             @empty

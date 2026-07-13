@@ -99,7 +99,7 @@ class UserController extends Controller
             'youtube_url'   => ['nullable', 'url', 'max:255'],
             'github_url'    => ['nullable', 'url', 'max:255'],
             'portfolio_url' => ['nullable', 'url', 'max:255'],
-            'photo'         => ['nullable', 'image', 'max:4096'],
+            'photo'         => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:8192'],
         ]);
 
         $payload = collect($data)->except(['skills', 'photo'])->toArray();

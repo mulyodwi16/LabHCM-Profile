@@ -8,8 +8,9 @@
 
     @if($project->images->count())
         <div class="grid md:grid-cols-2 gap-3 mt-6">
-            @foreach ($project->images as $img)
-                <img src="{{ $img->url }}" alt="" class="rounded-xl w-full">
+                @foreach ($project->images as $img)
+                    <img src="{{ $img->url }}" alt="{{ $project->title }}" class="rounded-xl w-full"
+                         onerror="this.onerror=null;this.src='{{ asset('images/HCMBlue.svg') }}';">
             @endforeach
         </div>
     @endif

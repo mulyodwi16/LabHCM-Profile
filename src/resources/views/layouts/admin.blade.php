@@ -46,6 +46,16 @@
             <h1 class="font-semibold text-slate-900">@yield('title', 'Admin')</h1>
         </header>
         <main class="p-6">
+            @if ($errors->any())
+                <div class="mb-4 p-4 glass rounded-xl border border-red-200/70 text-red-800">
+                    <p class="font-semibold mb-2">Periksa input berikut:</p>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @if(session('status'))
                 <div class="mb-4 p-3 glass rounded-xl border border-emerald-200/60 text-emerald-800">{{ session('status') }}</div>
             @endif

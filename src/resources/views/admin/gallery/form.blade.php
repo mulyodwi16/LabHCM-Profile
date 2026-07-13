@@ -21,7 +21,9 @@
     </div>
     <div>
         <label class="text-sm font-medium">Image {{ $item->exists ? '(leave blank to keep)' : '' }}</label>
-        <input type="file" name="image" accept="image/*" {{ $item->exists ? '' : 'required' }}>
+        <input type="file" name="image" accept=".jpg,.jpeg,.png,image/jpeg,image/png" {{ $item->exists ? '' : 'required' }} class="block w-full text-sm">
+        <x-upload-hint type="image" />
+        @error('image')<p class="text-red-600 text-sm">{{ $message }}</p>@enderror
         @if($item->exists)<img src="{{ $item->image_url }}" class="mt-2 w-32 h-32 object-cover rounded" alt="">@endif
     </div>
 

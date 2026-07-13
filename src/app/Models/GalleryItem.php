@@ -11,10 +11,18 @@ class GalleryItem extends Model
     protected $fillable = ['user_id', 'title', 'caption', 'image_path', 'taken_at'];
     protected $casts = ['taken_at' => 'date'];
 
+    protected $appends = ['image_url'];
+
     public function user(): BelongsTo { return $this->belongsTo(User::class); }
 
     public function getImageUrlAttribute(): string
     {
-        return str_starts_with($this->image_path, 'http') ? $this->image_path : Storage::url($this->image_path);
+        if (!$this->image_path || str_starts_with($this->image_path, 'http')) {
+            return $this->image_path
+                ? $this->image_path
+                : asset('images/HCMBlue.svg');
+        }
+
+        return Storage::disk('public')->url($this->image_path);
     }
 }

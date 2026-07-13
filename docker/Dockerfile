@@ -7,6 +7,7 @@ RUN apk add --no-cache \
   && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl gd intl bcmath
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY php/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
 WORKDIR /var/www
 

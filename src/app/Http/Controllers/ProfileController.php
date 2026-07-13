@@ -33,7 +33,7 @@ class ProfileController extends Controller
             'youtube_url'   => ['nullable', 'url', 'max:255'],
             'github_url'    => ['nullable', 'url', 'max:255'],
             'portfolio_url' => ['nullable', 'url', 'max:255'],
-            'photo'         => ['nullable', 'image', 'max:4096'],
+            'photo'         => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:8192'],
         ]);
 
         $user->update(['name' => $data['name'], 'email' => $data['email']]);
@@ -57,6 +57,9 @@ class ProfileController extends Controller
         $data = $r->validate([
             'label' => ['required', 'string', 'max:120'],
             'file'  => ['required', 'file', 'mimes:pdf', 'max:10240'],
+        ], [
+            'file.mimes' => 'Format dokumen tidak didukung. Gunakan PDF.',
+            'file.max'   => 'Ukuran dokumen maksimal 10 MB.',
         ]);
 
         $profile = $r->user()->profile()->firstOrCreate([]);

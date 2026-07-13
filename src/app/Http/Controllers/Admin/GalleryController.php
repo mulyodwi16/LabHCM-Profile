@@ -22,7 +22,10 @@ class GalleryController extends Controller
             'title'    => ['required', 'string', 'max:200'],
             'caption'  => ['nullable', 'string', 'max:1000'],
             'taken_at' => ['nullable', 'date'],
-            'image'    => ['required', 'image', 'max:8192'],
+            'image'    => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:8192'],
+        ], [
+            'image.mimes' => 'Format gambar tidak didukung. Gunakan JPG atau PNG.',
+            'image.max'   => 'Ukuran gambar maksimal 8 MB.',
         ]);
         $data['user_id']    = $r->user()->id;
         $data['image_path'] = $r->file('image')->store('gallery', 'public');
@@ -41,7 +44,10 @@ class GalleryController extends Controller
             'title'    => ['required', 'string', 'max:200'],
             'caption'  => ['nullable', 'string', 'max:1000'],
             'taken_at' => ['nullable', 'date'],
-            'image'    => ['nullable', 'image', 'max:8192'],
+            'image'    => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:8192'],
+        ], [
+            'image.mimes' => 'Format gambar tidak didukung. Gunakan JPG atau PNG.',
+            'image.max'   => 'Ukuran gambar maksimal 8 MB.',
         ]);
         if ($r->hasFile('image')) {
             Storage::disk('public')->delete($galleryItem->image_path);

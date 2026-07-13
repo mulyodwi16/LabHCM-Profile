@@ -27,12 +27,26 @@
         <div class="mb-4 p-3 bg-green-100 border border-green-200 text-green-800 rounded">{{ session('status') }}</div>
     @endif
 
+    @if ($errors->any())
+        <div class="mb-4 p-4 bg-red-50 border border-red-200 text-red-800 rounded">
+            <ul class="list-disc list-inside text-sm space-y-1">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="glass rounded-2xl p-6 space-y-4">
         @csrf @method('PATCH')
 
         <div class="flex items-center gap-4">
             <img src="{{ $user->profile?->photo_url }}" class="w-20 h-20 rounded-full object-cover border" alt="">
-            <input type="file" name="photo" accept="image/*" class="text-sm">
+            <div>
+                <input type="file" name="photo" accept=".jpg,.jpeg,.png,image/jpeg,image/png" class="text-sm block">
+                <x-upload-hint type="image" />
+                @error('photo')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
+            </div>
         </div>
 
         @foreach ($fields as [$name, $label, $type, $val])
@@ -67,7 +81,9 @@
             </div>
             <div>
                 <label class="text-sm text-slate-600">File</label>
-                <input type="file" name="file" accept="application/pdf" required class="block">
+                <input type="file" name="file" accept=".pdf,application/pdf" required class="block w-full text-sm">
+                <x-upload-hint type="pdf" />
+                @error('file')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
             </div>
             <button class="px-4 py-2 rounded-lg bg-slate-900 text-white">Upload</button>
         </form>

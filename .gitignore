@@ -1,4 +1,5 @@
 # --- Secrets & local config -----------------------------------------------
+.env
 docker-compose.yml
 docker-compose.override.yml
 src/.env
